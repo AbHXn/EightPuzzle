@@ -72,7 +72,7 @@ class EIGHT_PUZZLE:
     
         return possible_states
 
-    # A START ALGORITHM
+    # A STAR ALGORITHM
     def play( self ):
         current_hscore = self.get_heuristic_score( self.board )
         priority_queue = [(current_hscore, 0, self.board, None)]
@@ -83,16 +83,13 @@ class EIGHT_PUZZLE:
             if self.is_visited( current_state ): continue
 
             next_pos_states = self.get_next_possible_states(current_state)
-            
             for next_state in next_pos_states:
                 score = self.get_heuristic_score(next_state) + gscore + 1
                 heapq.heappush( priority_queue, (score, gscore + 1, next_state, current_state) )
-
             self.add_to_visited_list( current_state )
             
             parent = None if parent is None else self.convert_to_tuple(parent)
             child = self.convert_to_tuple(current_state)
-            
             self.move_tracker[child] = parent;
             self.board = current_state
 
