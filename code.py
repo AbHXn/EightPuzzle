@@ -66,43 +66,39 @@ class EIGHT_PUZZLE:
         for row, col in neighbhors:
             new_board = copy.deepcopy(board)
             new_board[row][col], new_board[srow][scol] = new_board[srow][scol], new_board[row][col]
-       
+
             if not self.is_visited(new_board):
                 possible_states.append(new_board)
-    
         return possible_states
 
     # A STAR ALGORITHM
     def play( self ):
         current_hscore = self.get_heuristic_score( self.board )
-        priority_queue = [(current_hscore, 0, self.board, None)]
+        priority_queue = [ ( current_hscore, 0, self.board, None ) ]
     
         while priority_queue != []:
             fscore, gscore, current_state, parent = heapq.heappop( priority_queue )
-
             if self.is_visited( current_state ): continue
 
-            next_pos_states = self.get_next_possible_states(current_state)
+            next_pos_states = self.get_next_possible_states( current_state )
             for next_state in next_pos_states:
-                score = self.get_heuristic_score(next_state) + gscore + 1
-                heapq.heappush( priority_queue, (score, gscore + 1, next_state, current_state) )
+                score = self.get_heuristic_score( next_state ) + gscore + 1
+                heapq.heappush( priority_queue, ( score, gscore + 1, next_state, current_state ) )
             self.add_to_visited_list( current_state )
             
-            parent = None if parent is None else self.convert_to_tuple(parent)
-            child = self.convert_to_tuple(current_state)
-            self.move_tracker[child] = parent;
-            self.board = current_state
+            parent = None if parent is None else self.convert_to_tuple( parent )
+            child = self.convert_to_tuple( current_state )
+            self.move_tracker[ child ] = parent;
 
-            if self.reached_goal_state( current_state ): break
+            if self.reached_goal_state( current_state ):
+                path = self.get_path( current_state )
+                self.simulate_path( path )
+                return 
 
-        if not self.reached_goal_state( self.board ):
-            print("Cannot solve this puzzle")
-        else:
-            path = self.get_path()
-            self.simulate_path(path)
+        print("Cannot solve this puzzle")
 
-    def get_path(self):
-        path, current = [self.board], self.board
+    def get_path( self, current_state ):
+        path, current = [ current_state ], current_state
         current_set = self.convert_to_tuple( current )
     
         while cpath := self.move_tracker.get( current_set, None ):
@@ -114,10 +110,13 @@ class EIGHT_PUZZLE:
     def simulate_path(self, path):
         for cpath in path[::-1]:
             system("clear")
+            print("INITIAL STATE: ")
+            EIGHT_PUZZLE.print_state(self.board)
+            print()
             EIGHT_PUZZLE.print_state( cpath )
             time.sleep(0.5)
 
-        print(f"{len( path ) - 1} Moves To Solve ")
+        print(f"Took {len( path ) - 1} Moves To Solve")
 
     @staticmethod
     def print_state( board ):
@@ -128,8 +127,5 @@ class EIGHT_PUZZLE:
 
 if __name__ == "__main__":
     test = EIGHT_PUZZLE()
-    board = copy.deepcopy( test.board )
     EIGHT_PUZZLE.print_state( test.board )
-
     test.play()
-    EIGHT_PUZZLE.print_state( board )
