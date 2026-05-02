@@ -24,7 +24,7 @@ Install dependencies:
 
 ## ▶️ Run the Project
 
-    python main.py
+    python Gui.py
 
 ---
 
@@ -48,7 +48,8 @@ Install dependencies:
 
 ## 📁 Project Structure
 
-    main.py
+    Gui.py
+    EPuzzleAi.py
     README.md
 
 ---
