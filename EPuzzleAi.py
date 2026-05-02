@@ -13,8 +13,8 @@ class EIGHT_PUZZLE:
     __random_pieces = ['1', '2', '3', '4', '5', '6', '7', '8', '_']
 
     def __init__(self, board = None, goal = None):
-        self.board = board if board else self.generate_random_state()
-        self.goal_state = goal if goal else self.__DEFAULT_GOAL_STATE
+        self.board = board if board is not None else self.generate_random_state()
+        self.goal_state = goal if goal is not None else self.__DEFAULT_GOAL_STATE
         self.visited_list = set()
         self.move_tracker = defaultdict(tuple)
 
@@ -91,9 +91,7 @@ class EIGHT_PUZZLE:
             self.move_tracker[ child ] = parent;
 
             if self.reached_goal_state( current_state ):
-                path = self.get_path( current_state )
-                self.simulate_path( path )
-                return 
+                return self.get_path( current_state )
 
         print("Cannot solve this puzzle")
 
@@ -107,11 +105,13 @@ class EIGHT_PUZZLE:
         
         return path
 
+    # for NON UI (terminal simulation)
     def simulate_path(self, path):
         for cpath in path[::-1]:
             system("clear")
             print("INITIAL STATE: ")
             EIGHT_PUZZLE.print_state(self.board)
+            print("RUNNING...")
             print()
             EIGHT_PUZZLE.print_state( cpath )
             time.sleep(0.5)
@@ -124,8 +124,3 @@ class EIGHT_PUZZLE:
             for col in row:
                 print(col, end = " ")
             print()
-
-if __name__ == "__main__":
-    test = EIGHT_PUZZLE()
-    EIGHT_PUZZLE.print_state( test.board )
-    test.play()
