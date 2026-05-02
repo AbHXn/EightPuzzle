@@ -3,27 +3,9 @@
 A simple **8 Puzzle Game + AI Solver** built using Python.
 
 It includes:
-- 🎮 Interactive GUI (click to move tiles)
+- 🎮 GUI (click to move tiles)
 - 🧠 A* Algorithm to solve the puzzle
 - ▶️ Step-by-step solution animation
-
----
-
-## 🚀 Features
-
-- 3×3 puzzle board  
-- Click tiles to move  
-- Solve button (AI solves puzzle)  
-- Animated solution  
-- Clean and simple UI  
-
----
-
-## 🛠️ Technologies Used
-
-- Python  
-- PyQt5 (GUI framework)  
-- A* Search Algorithm  
 
 ---
 
