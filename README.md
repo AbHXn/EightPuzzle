@@ -2,6 +2,8 @@
 
 A simple **8 Puzzle Game + AI Solver** built using Python.
 
+![Screenshot](./Screenshot/screenshot.png)
+
 It includes:
 - 🎮 GUI (click to move tiles)
 - 🧠 A* Algorithm to solve the puzzle
